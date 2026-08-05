@@ -15,21 +15,21 @@ const experiences = [
     period: "2026 — NOW",
     company: "Lions Financial",
     role: "Business Advisory & Risk Management Intern",
-    summary: "Built GTM analysis, conversion recommendations, financial models, and recurring AI-assisted research workflows.",
+    summary: "Built GTM conversion recommendations, financial models, and AI-assisted workflows that accelerated recurring market research.",
     tags: ["GTM strategy", "GA4", "Python", "Financial modeling"],
   },
   {
     period: "2025",
     company: "Bolun Bole Clothing Co.",
     role: "Business Analyst Intern",
-    summary: "Managed a 200k+ customer database and used SQL segmentation and experimentation to improve campaign performance.",
+    summary: "Managed 200k+ customer records; SQL segmentation and experimentation improved campaign engagement by 15%.",
     tags: ["SQL", "Segmentation", "A/B testing", "Lifecycle analytics"],
   },
   {
     period: "2024",
     company: "Apexus-Tech",
     role: "Business Analyst Intern",
-    summary: "Evaluated financial data infrastructure and built operational dashboards that reduced recurring reporting time.",
+    summary: "Evaluated financial data infrastructure and built operational dashboards that reduced recurring reporting time by 30%.",
     tags: ["Tableau", "Grafana", "Data infrastructure", "Predictive models"],
   },
 ];
@@ -46,8 +46,8 @@ export default function Home() {
       <nav className="site-nav">
         <a className="identity" href="#top" aria-label="Zhengyu Zhou home"><b>Z/Z</b><span>ZHENGYU ZHOU</span></a>
         <div className="nav-menu">
-          <a href="#about">About</a>
           <a href="#work">Work</a>
+          <a href="#about">About</a>
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </div>
@@ -55,7 +55,7 @@ export default function Home() {
       </nav>
 
       <header className="portfolio-hero" id="top">
-        <div className="availability"><i /> OPEN TO AI PRODUCT ROLES · BOSTON / US</div>
+        <div className="availability"><i /> AI PRODUCT MANAGER · OPEN TO ROLES · BOSTON / US</div>
         <div className="hero-grid">
           <h1>I turn messy data<br />into <em>useful</em><br />AI products.</h1>
           <div className="hero-aside">
@@ -75,23 +75,15 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="about-section" id="about">
-        <div className="vertical-label">01 / ABOUT</div>
-        <div className="about-copy">
-          <span className="section-kicker">A BUSINESS MIND WITH A BUILDER&apos;S BIAS</span>
-          <h2>Not just analyzing what happened.<br /><em>Designing what should happen next.</em></h2>
-          <div className="about-columns">
-            <p>I work at the intersection of data, business, and AI. My background spans funnel analysis, customer segmentation, financial modeling, dashboards, and workflow automation—so I naturally think in both user problems and measurable outcomes.</p>
-            <p>I&apos;m especially interested in AI products that help people make better decisions: systems that synthesize complexity, make uncertainty visible, and turn insight into action without hiding the reasoning.</p>
-          </div>
-        </div>
-      </section>
-
       <section className="work-section" id="work">
-        <div className="section-head inverted"><span>02 / SELECTED WORK</span><h2>One flagship product.<br />Built end to end.</h2><p>Product strategy · UX · Vibe coding</p></div>
+        <div className="section-head inverted"><span>01 / SELECTED WORK</span><h2>One flagship product.<br />Built end to end.</h2><p>Product strategy · UX prototyping · AI-assisted development</p></div>
         <div className="project-intro">
           <div><span>CASE STUDY 01 · 2026</span><h3>SignalRoom</h3><p>An AI GTM Decision Copilot that turns noisy funnel data into a prioritized, reviewable experiment.</p></div>
           <div className="project-thesis"><b>THE THESIS</b><p>Growth teams don&apos;t need another dashboard. They need a faster path from anomaly to confident action.</p></div>
+        </div>
+
+        <div className="process-strip" aria-label="SignalRoom product process">
+          <span><b>01</b> Frame the decision</span><i>→</i><span><b>02</b> Synthesize signals</span><i>→</i><span><b>03</b> Simulate options</span><i>→</i><span><b>04</b> Human review</span><i>→</i><span><b>05</b> Measure lift</span>
         </div>
 
         <div className="demo-window">
@@ -100,7 +92,7 @@ export default function Home() {
             <aside>
               <span className="demo-step">01 / SET CONTEXT</span>
               <label>Audience segment</label>
-              <div className="segment-buttons">{(Object.keys(segmentData) as Segment[]).map((item) => <button key={item} onClick={() => setSegment(item)} className={segment === item ? "active" : ""}>{item}</button>)}</div>
+              <div className="segment-buttons">{(Object.keys(segmentData) as Segment[]).map((item) => <button key={item} onClick={() => setSegment(item)} className={segment === item ? "active" : ""} aria-pressed={segment === item}>{item}</button>)}</div>
               <label>Incremental budget <output>${budget}k</output></label>
               <input type="range" min="10" max="80" value={budget} onChange={(event) => setBudget(Number(event.target.value))} aria-label="Incremental budget" />
               <div className="demo-assumption"><b>ASSUMPTION</b><p>Budget can be reallocated without reducing branded search coverage.</p></div>
@@ -124,6 +116,18 @@ export default function Home() {
           <div><span>JOB TO BE DONE</span><h4>Defend the next move</h4><p>Identify the highest-leverage intervention and align a team around a test.</p></div>
           <div><span>NORTH STAR</span><h4>Time to confident decision</h4><p>Guardrails: override rate, realized lift, and evidence coverage.</p></div>
           <div><span>AI&apos;S ROLE</span><h4>Synthesize, simulate, explain</h4><p>AI drafts the decision. People inspect evidence and approve the action.</p></div>
+        </div>
+      </section>
+
+      <section className="about-section" id="about">
+        <div className="vertical-label">02 / ABOUT</div>
+        <div className="about-copy">
+          <span className="section-kicker">A BUSINESS MIND WITH A BUILDER&apos;S BIAS</span>
+          <h2>Not just analyzing what happened.<br /><em>Designing what should happen next.</em></h2>
+          <div className="about-columns">
+            <p>I work at the intersection of data, business, and AI. My background spans funnel analysis, customer segmentation, financial modeling, dashboards, and workflow automation—so I naturally think in both user problems and measurable outcomes.</p>
+            <p>I&apos;m especially interested in AI products that help people make better decisions: systems that synthesize complexity, make uncertainty visible, and turn insight into action without hiding the reasoning.</p>
+          </div>
         </div>
       </section>
 
