@@ -19,15 +19,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
   const origin = `${protocol}://${host}`;
   return {
-    title: "SignalRoom — AI GTM Decision Copilot",
-    description: "An interactive AI product management portfolio project by Zhengyu Zhou.",
+    title: "Zhengyu Zhou — AI Product Manager",
+    description: "AI product manager portfolio spanning GTM analytics, experimentation, automation, and decision systems.",
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
     openGraph: {
-      title: "SignalRoom — AI GTM Decision Copilot",
-      description: "From noisy funnel data to the next best move.",
-      images: [{ url: `${origin}/og.png`, width: 1200, height: 630, alt: "SignalRoom product preview" }],
+      title: "Zhengyu Zhou — AI Product Manager",
+      description: "I turn messy data into useful AI products.",
+      images: [{ url: `${origin}/og-portfolio.png`, width: 1200, height: 630, alt: "Zhengyu Zhou AI Product Manager portfolio" }],
     },
-    twitter: { card: "summary_large_image", images: [`${origin}/og.png`] },
+    twitter: { card: "summary_large_image", images: [`${origin}/og-portfolio.png`] },
   };
 }
 

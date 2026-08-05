@@ -3,188 +3,162 @@
 import { useMemo, useState } from "react";
 
 type Segment = "SMB" | "Mid-market" | "Enterprise";
-type View = "decision" | "experiments" | "evidence";
 
 const segmentData = {
-  SMB: { visitors: 42800, leads: 3424, demos: 548, wins: 82, cac: 1640, cycle: 19 },
-  "Mid-market": { visitors: 24100, leads: 1446, demos: 304, wins: 61, cac: 2310, cycle: 34 },
-  Enterprise: { visitors: 9200, leads: 368, demos: 96, wins: 14, cac: 7280, cycle: 73 },
+  SMB: { visitors: 42800, wins: 82, lift: 11, action: "Move social proof into the first-touch journey" },
+  "Mid-market": { visitors: 24100, wins: 61, lift: 17, action: "Replace generic demo follow-up with role-based proof" },
+  Enterprise: { visitors: 9200, wins: 14, lift: 8, action: "Tighten account qualification before adding spend" },
 };
 
-const fmt = (value: number) => new Intl.NumberFormat("en-US").format(value);
+const experiences = [
+  {
+    period: "2026 — NOW",
+    company: "Lions Financial",
+    role: "Business Advisory & Risk Management Intern",
+    summary: "Built GTM analysis, conversion recommendations, financial models, and recurring AI-assisted research workflows.",
+    tags: ["GTM strategy", "GA4", "Python", "Financial modeling"],
+  },
+  {
+    period: "2025",
+    company: "Bolun Bole Clothing Co.",
+    role: "Business Analyst Intern",
+    summary: "Managed a 200k+ customer database and used SQL segmentation and experimentation to improve campaign performance.",
+    tags: ["SQL", "Segmentation", "A/B testing", "Lifecycle analytics"],
+  },
+  {
+    period: "2024",
+    company: "Apexus-Tech",
+    role: "Business Analyst Intern",
+    summary: "Evaluated financial data infrastructure and built operational dashboards that reduced recurring reporting time.",
+    tags: ["Tableau", "Grafana", "Data infrastructure", "Predictive models"],
+  },
+];
 
 export default function Home() {
   const [segment, setSegment] = useState<Segment>("Mid-market");
-  const [view, setView] = useState<View>("decision");
   const [budget, setBudget] = useState(35);
-  const [risk, setRisk] = useState(2);
-  const [analyzed, setAnalyzed] = useState(true);
-
-  const d = segmentData[segment];
-  const model = useMemo(() => {
-    const riskBoost = [0.65, 1, 1.38][risk - 1];
-    const lift = Math.round((7 + budget * 0.19) * riskBoost);
-    const extraWins = Math.max(3, Math.round(d.wins * lift / 100));
-    const confidence = Math.min(93, Math.round(86 - Math.abs(budget - 35) * 0.12 - (risk - 1) * 6));
-    return { lift, extraWins, confidence, pipeline: extraWins * (segment === "Enterprise" ? 52000 : segment === "Mid-market" ? 24000 : 7200) };
-  }, [budget, d.wins, risk, segment]);
-
-  const runAnalysis = () => {
-    setAnalyzed(false);
-    window.setTimeout(() => setAnalyzed(true), 850);
-  };
+  const data = segmentData[segment];
+  const impact = useMemo(() => Math.round(data.wins * (data.lift + budget / 12) / 100), [budget, data]);
 
   return (
     <main>
-      <nav className="topbar">
-        <a className="brand" href="#top" aria-label="SignalRoom home">
-          <span className="brand-mark">S</span>
-          <span>SignalRoom</span>
-          <span className="beta">PROTOTYPE</span>
-        </a>
-        <div className="nav-links">
-          <a href="#workspace">Demo</a>
-          <a href="#case-study">Case study</a>
-          <a className="nav-cta" href="mailto:zhouzhengyu221@gmail.com">Contact Zhengyu</a>
+      <nav className="site-nav">
+        <a className="identity" href="#top" aria-label="Zhengyu Zhou home"><b>Z/Z</b><span>ZHENGYU ZHOU</span></a>
+        <div className="nav-menu">
+          <a href="#about">About</a>
+          <a href="#work">Work</a>
+          <a href="#experience">Experience</a>
+          <a href="#contact">Contact</a>
         </div>
+        <a className="resume-link" href="/Zhengyu_Zhou_Resume.docx" download>Résumé ↓</a>
       </nav>
 
-      <section className="hero" id="top">
-        <div className="eyebrow"><span /> AI GTM DECISION COPILOT</div>
-        <h1>Turn noisy funnel data<br />into the <em>next best move.</em></h1>
-        <p className="hero-copy">SignalRoom helps growth teams find the revenue leak, compare interventions, and launch a measurable experiment—with evidence attached.</p>
-        <div className="hero-actions">
-          <a className="primary-btn" href="#workspace">Explore the live prototype <span>↘</span></a>
-          <a className="text-link" href="#case-study">Read the product thinking <span>→</span></a>
+      <header className="portfolio-hero" id="top">
+        <div className="availability"><i /> OPEN TO AI PRODUCT ROLES · BOSTON / US</div>
+        <div className="hero-grid">
+          <h1>I turn messy data<br />into <em>useful</em><br />AI products.</h1>
+          <div className="hero-aside">
+            <div className="portrait-mark"><span>ZZ</span><i>AI × DATA × BUSINESS</i></div>
+            <p>Applied Business Analytics graduate student with hands-on experience across GTM strategy, experimentation, automation, and decision systems.</p>
+            <div className="hero-links">
+              <a href="#work">See selected work <span>↘</span></a>
+              <a href="mailto:zhouzhengyu221@gmail.com">zhouzhengyu221@gmail.com ↗</a>
+            </div>
+          </div>
         </div>
-        <div className="principles" aria-label="Product principles">
-          <div><b>01</b><span><strong>Evidence first</strong>Every claim links to a signal.</span></div>
-          <div><b>02</b><span><strong>Decision, not dashboard</strong>One prioritized action at a time.</span></div>
-          <div><b>03</b><span><strong>Human in control</strong>Assumptions stay visible and editable.</span></div>
+        <div className="hero-proof">
+          <div><strong>200k+</strong><span>customer records<br />operationalized</span></div>
+          <div><strong>+15%</strong><span>campaign engagement<br />from segmentation</span></div>
+          <div><strong>−30%</strong><span>recurring reporting<br />time</span></div>
+          <div className="proof-note"><b>MY PRODUCT LENS</b><p>Start with the decision. Show the evidence. Keep the human in control.</p></div>
         </div>
-      </section>
+      </header>
 
-      <section className="workspace-wrap" id="workspace">
-        <div className="section-intro light">
-          <span>INTERACTIVE PRODUCT DEMO</span>
-          <div><h2>From signal to experiment.</h2><p>Sample data · Nimbus AI Workflow Suite · Q2 acquisition funnel</p></div>
-        </div>
-
-        <div className="app-shell">
-          <header className="app-header">
-            <div><span className="status-dot" /> LIVE WORKSPACE <b>/</b> Q2 Pipeline Review</div>
-            <div className="data-status">Data synced 08:42 <span>✓</span></div>
-          </header>
-
-          <div className="app-body">
-            <aside className="control-panel">
-              <div className="control-title"><span>01</span><h3>Define the decision</h3></div>
-              <label>Audience segment</label>
-              <div className="segmented">
-                {(Object.keys(segmentData) as Segment[]).map((s) => <button key={s} className={segment === s ? "active" : ""} onClick={() => setSegment(s)}>{s}</button>)}
-              </div>
-
-              <label>Incremental campaign budget <output>${budget}k</output></label>
-              <input aria-label="Incremental campaign budget" type="range" min="10" max="80" value={budget} onChange={(e) => setBudget(Number(e.target.value))} />
-              <div className="range-labels"><span>$10k</span><span>$80k</span></div>
-
-              <label>Risk posture</label>
-              <div className="risk-options">
-                {["Conservative", "Balanced", "Aggressive"].map((r, i) => <button key={r} onClick={() => setRisk(i + 1)} className={risk === i + 1 ? "active" : ""}><i>{i + 1}</i><span>{r}<small>{i === 0 ? "Protect efficiency" : i === 1 ? "Optimize learning" : "Maximize upside"}</small></span></button>)}
-              </div>
-
-              <button className="analyze-btn" onClick={runAnalysis}>{analyzed ? "Re-run AI analysis" : "Analyzing signals…"}<span>{analyzed ? "↗" : "•••"}</span></button>
-              <p className="prototype-note">Prototype simulation—no production AI model or customer data is used.</p>
-            </aside>
-
-            <section className={`decision-panel ${!analyzed ? "loading" : ""}`}>
-              <div className="decision-top">
-                <div><span className="mini-label">02 / DIAGNOSE</span><h3>{segment} funnel health</h3></div>
-                <div className="confidence"><span>{model.confidence}%</span> MODEL CONFIDENCE</div>
-              </div>
-
-              <div className="funnel-metrics">
-                <Metric label="Visitors" value={fmt(d.visitors)} rate="100%" />
-                <Metric label="Qualified leads" value={fmt(d.leads)} rate={`${Math.round(d.leads / d.visitors * 100)}%`} alert={segment === "Enterprise"} />
-                <Metric label="Demos held" value={fmt(d.demos)} rate={`${Math.round(d.demos / d.leads * 100)}%`} alert={segment === "Mid-market"} />
-                <Metric label="Closed won" value={fmt(d.wins)} rate={`${Math.round(d.wins / d.demos * 100)}%`} />
-              </div>
-
-              <div className="tabs" role="tablist">
-                {(["decision", "experiments", "evidence"] as View[]).map((v) => <button key={v} role="tab" aria-selected={view === v} className={view === v ? "active" : ""} onClick={() => setView(v)}>{v === "decision" ? "Recommended decision" : v === "experiments" ? "Experiment plan" : "Evidence trail"}</button>)}
-              </div>
-
-              {view === "decision" && <DecisionView segment={segment} budget={budget} model={model} cac={d.cac} cycle={d.cycle} />}
-              {view === "experiments" && <ExperimentView segment={segment} />}
-              {view === "evidence" && <EvidenceView segment={segment} />}
-            </section>
+      <section className="about-section" id="about">
+        <div className="vertical-label">01 / ABOUT</div>
+        <div className="about-copy">
+          <span className="section-kicker">A BUSINESS MIND WITH A BUILDER&apos;S BIAS</span>
+          <h2>Not just analyzing what happened.<br /><em>Designing what should happen next.</em></h2>
+          <div className="about-columns">
+            <p>I work at the intersection of data, business, and AI. My background spans funnel analysis, customer segmentation, financial modeling, dashboards, and workflow automation—so I naturally think in both user problems and measurable outcomes.</p>
+            <p>I&apos;m especially interested in AI products that help people make better decisions: systems that synthesize complexity, make uncertainty visible, and turn insight into action without hiding the reasoning.</p>
           </div>
         </div>
       </section>
 
-      <section className="case-study" id="case-study">
-        <div className="section-intro dark">
-          <span>BEHIND THE PRODUCT</span>
-          <div><h2>Built around a real PM problem.</h2><p>A portfolio piece by Zhengyu Zhou</p></div>
+      <section className="work-section" id="work">
+        <div className="section-head inverted"><span>02 / SELECTED WORK</span><h2>One flagship product.<br />Built end to end.</h2><p>Product strategy · UX · Vibe coding</p></div>
+        <div className="project-intro">
+          <div><span>CASE STUDY 01 · 2026</span><h3>SignalRoom</h3><p>An AI GTM Decision Copilot that turns noisy funnel data into a prioritized, reviewable experiment.</p></div>
+          <div className="project-thesis"><b>THE THESIS</b><p>Growth teams don&apos;t need another dashboard. They need a faster path from anomaly to confident action.</p></div>
         </div>
 
-        <div className="case-grid">
-          <article className="case-lead"><span>THE OPPORTUNITY</span><h3>Teams have more data than decisions.</h3><p>Growth tools surface dozens of metrics, while the operator still has to decide what changed, why it matters, and what to test next. SignalRoom compresses that path into a reviewable decision workflow.</p></article>
-          <article><span>USER</span><h4>Growth & RevOps leads</h4><p>Analytical operators responsible for pipeline outcomes, working across marketing and sales.</p></article>
-          <article><span>JOB TO BE DONE</span><h4>“Help me defend the next move.”</h4><p>When a funnel misses plan, identify the highest-leverage intervention and align the team around a test.</p></article>
-          <article><span>AI ROLE</span><h4>Synthesize, simulate, explain</h4><p>AI ranks hypotheses and drafts experiments. It never hides the data, assumptions, or uncertainty.</p></article>
-          <article><span>NORTH STAR</span><h4>Time to confident decision</h4><p>Primary: median time from anomaly detection to approved experiment. Guardrails: override rate and realized lift.</p></article>
+        <div className="demo-window">
+          <div className="demo-bar"><span><i /> SIGNALROOM / Q2 PIPELINE REVIEW</span><span>INTERACTIVE PROTOTYPE</span></div>
+          <div className="demo-layout">
+            <aside>
+              <span className="demo-step">01 / SET CONTEXT</span>
+              <label>Audience segment</label>
+              <div className="segment-buttons">{(Object.keys(segmentData) as Segment[]).map((item) => <button key={item} onClick={() => setSegment(item)} className={segment === item ? "active" : ""}>{item}</button>)}</div>
+              <label>Incremental budget <output>${budget}k</output></label>
+              <input type="range" min="10" max="80" value={budget} onChange={(event) => setBudget(Number(event.target.value))} aria-label="Incremental budget" />
+              <div className="demo-assumption"><b>ASSUMPTION</b><p>Budget can be reallocated without reducing branded search coverage.</p></div>
+            </aside>
+            <div className="demo-result">
+              <div className="result-top"><div><span className="demo-step">02 / RECOMMEND</span><h4>{segment} growth decision</h4></div><div className="confidence"><strong>{84 - Math.round(Math.abs(budget - 35) / 8)}%</strong>CONFIDENCE</div></div>
+              <div className="recommendation-card"><span>HIGHEST-LEVERAGE MOVE</span><h5>{data.action}</h5><p>SignalRoom connects observed funnel behavior to a testable intervention, then exposes the assumptions behind the recommendation.</p></div>
+              <div className="impact-grid">
+                <div><span>VISITORS</span><strong>{data.visitors.toLocaleString()}</strong></div>
+                <div><span>BASE WINS</span><strong>{data.wins}</strong></div>
+                <div><span>PROJECTED LIFT</span><strong>+{data.lift + Math.round(budget / 12)}%</strong></div>
+                <div><span>EXTRA WINS</span><strong>+{impact}</strong></div>
+              </div>
+              <div className="experiment-strip"><b>NEXT EXPERIMENT</b><span>Run a controlled 21-day test · Measure opportunity creation · Protect lead quality</span><button onClick={() => navigator.clipboard?.writeText(`${segment}: ${data.action}`)}>Copy brief</button></div>
+            </div>
+          </div>
         </div>
 
-        <div className="experience-strip">
-          <div><span className="big-number">200k+</span><p>customer records managed</p></div>
-          <div><span className="big-number">+15%</span><p>engagement from SQL segmentation</p></div>
-          <div><span className="big-number">−30%</span><p>recurring reporting time</p></div>
-          <div className="bio"><span>WHY ME</span><p>I combine hands-on analytics with product judgment: segmentation, funnel analysis, experimentation, dashboards, and AI-assisted workflows.</p></div>
-        </div>
-
-        <div className="roadmap">
-          <div><span>NOW / PROTOTYPE</span><p>Decision simulation, evidence trail, experiment brief</p></div>
-          <div><span>NEXT / VALIDATE</span><p>5 operator interviews, benchmark time-to-decision, test trust cues</p></div>
-          <div><span>LATER / SCALE</span><p>Warehouse connectors, monitored outcomes, team learning memory</p></div>
+        <div className="case-logic">
+          <div><span>USER</span><h4>Growth & RevOps leads</h4><p>Operators accountable for pipeline outcomes across marketing and sales.</p></div>
+          <div><span>JOB TO BE DONE</span><h4>Defend the next move</h4><p>Identify the highest-leverage intervention and align a team around a test.</p></div>
+          <div><span>NORTH STAR</span><h4>Time to confident decision</h4><p>Guardrails: override rate, realized lift, and evidence coverage.</p></div>
+          <div><span>AI&apos;S ROLE</span><h4>Synthesize, simulate, explain</h4><p>AI drafts the decision. People inspect evidence and approve the action.</p></div>
         </div>
       </section>
 
-      <footer>
-        <div><span className="footer-kicker">LET’S BUILD USEFUL AI.</span><h2>Looking for an AI Product Manager<br />who speaks data <em>and</em> decisions?</h2></div>
-        <div className="footer-actions"><a href="mailto:zhouzhengyu221@gmail.com">Start a conversation ↗</a><a href="https://linkedin.com/in/zhengyu-zhou-ksgg" target="_blank" rel="noreferrer">LinkedIn ↗</a></div>
-        <div className="footer-bottom"><span>ZHENGYU ZHOU · BOSTON, MA</span><span>DESIGNED & BUILT WITH AI · 2026</span></div>
+      <section className="experience-section" id="experience">
+        <div className="section-head"><span>03 / EXPERIENCE</span><h2>Learning across<br />the full decision stack.</h2><p>Strategy → Data → Action</p></div>
+        <div className="timeline">
+          {experiences.map((item, index) => <article key={item.company}>
+            <div className="timeline-index">0{index + 1}</div>
+            <div className="timeline-period">{item.period}</div>
+            <div className="timeline-main"><span>{item.company}</span><h3>{item.role}</h3><p>{item.summary}</p><div className="tag-row">{item.tags.map((tag) => <i key={tag}>{tag}</i>)}</div></div>
+          </article>)}
+        </div>
+      </section>
+
+      <section className="capability-section">
+        <div className="capability-title"><span>04 / TOOLKIT</span><h2>I bridge the gap between<br /><em>“What does the data say?”</em><br />and “What should we build?”</h2></div>
+        <div className="capability-grid">
+          <div><b>PRODUCT</b><p>Problem framing<br />User journeys<br />Experiment design<br />North-star metrics<br />Roadmapping</p></div>
+          <div><b>ANALYTICS</b><p>SQL & Python<br />Funnel analysis<br />Customer segmentation<br />Predictive modeling<br />A/B testing</p></div>
+          <div><b>BUSINESS</b><p>GTM strategy<br />Financial modeling<br />Market research<br />Process improvement<br />Stakeholder storytelling</p></div>
+          <div><b>PLATFORMS</b><p>Tableau & Power BI<br />GA4<br />Excel & VBA<br />AWS<br />AI-assisted workflows</p></div>
+        </div>
+      </section>
+
+      <section className="education-section">
+        <div><span>EDUCATION</span><h3>Boston University</h3><p>MS Applied Business Analytics · 2024—2026</p></div>
+        <div><span>FOUNDATION</span><h3>Gordon College</h3><p>BA Business Administration · Magna Cum Laude</p></div>
+        <div><span>RECOGNITION</span><h3>DSI 2025</h3><p>Presenter & Session Chair · Business Analytics</p></div>
+      </section>
+
+      <footer id="contact">
+        <span className="contact-kicker">AVAILABLE FOR AI PRODUCT MANAGER OPPORTUNITIES</span>
+        <h2>Let&apos;s build AI that earns<br />its place in the <em>workflow.</em></h2>
+        <div className="contact-row"><a href="mailto:zhouzhengyu221@gmail.com">Email me ↗</a><a href="https://linkedin.com/in/zhengyu-zhou-ksgg" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="/Zhengyu_Zhou_Resume.docx" download>Download résumé ↓</a></div>
+        <div className="footer-meta"><span>ZHENGYU ZHOU · BOSTON, MA</span><span>ENGLISH / 中文</span><span>© 2026</span></div>
       </footer>
     </main>
   );
-}
-
-function Metric({ label, value, rate, alert = false }: { label: string; value: string; rate: string; alert?: boolean }) {
-  return <div className={alert ? "metric alert" : "metric"}><span>{label}</span><strong>{value}</strong><small><i style={{ width: `${Math.max(16, Math.min(100, Number(rate.replace("%", "")) * 3))}%` }} />{rate} conversion</small></div>;
-}
-
-function DecisionView({ segment, budget, model, cac, cycle }: { segment: Segment; budget: number; model: { lift: number; extraWins: number; confidence: number; pipeline: number }; cac: number; cycle: number }) {
-  return <div className="tab-content decision-view">
-    <div className="recommendation">
-      <div className="rec-rank">01</div>
-      <div><span>HIGHEST-LEVERAGE MOVE</span><h4>{segment === "Enterprise" ? "Tighten account qualification before adding spend" : segment === "SMB" ? "Move social proof into the first-touch journey" : "Replace generic demo follow-up with role-based proof"}</h4><p>{segment === "Mid-market" ? "Demo attendance is healthy, but post-demo momentum decays in the first 72 hours. Tailored proof by buyer role should improve progression without increasing top-of-funnel volume." : segment === "SMB" ? "High intent volume is present. The largest controllable gap is confidence before the demo request, especially for operations-led buyers." : "Low lead quality and a long sales cycle make additional volume expensive. Narrow the ICP and score buying signals before routing accounts to sales."}</p></div>
-    </div>
-    <div className="impact-row">
-      <div><span>PROJECTED WIN LIFT</span><strong>+{model.lift}%</strong><small>range: +{Math.max(2, model.lift - 6)}–{model.lift + 7}%</small></div>
-      <div><span>INCREMENTAL WINS</span><strong>+{model.extraWins}</strong><small>per quarter</small></div>
-      <div><span>PIPELINE IMPACT</span><strong>${Math.round(model.pipeline / 1000)}k</strong><small>modeled, not guaranteed</small></div>
-      <div><span>CURRENT CAC / CYCLE</span><strong>${fmt(cac)}</strong><small>{cycle} day sales cycle</small></div>
-    </div>
-    <div className="assumption"><b>Key assumption</b><span>${budget}k can be reallocated without reducing branded search coverage. Validate channel overlap before launch.</span><button onClick={() => window.alert("Prototype action: in production, this opens the editable assumptions drawer.")}>Edit</button></div>
-  </div>;
-}
-
-function ExperimentView({ segment }: { segment: Segment }) {
-  const steps = segment === "Enterprise" ? ["Re-score 120 open accounts", "Hold back 20% as control", "Compare SQL rate at day 21"] : segment === "SMB" ? ["Create 2 proof-led landing variants", "Split traffic 50 / 50", "Read demo conversion after 1,000 visits"] : ["Build role-based recap templates", "Randomize 50% of held demos", "Measure opportunity creation at day 14"];
-  return <div className="tab-content experiment-view"><div className="experiment-header"><div><span>AI-DRAFTED TEST BRIEF</span><h4>{segment} momentum experiment</h4></div><button onClick={() => navigator.clipboard?.writeText(steps.join("\n"))}>Copy brief</button></div><div className="step-grid">{steps.map((s, i) => <div key={s}><i>{i + 1}</i><span>{["Prepare", "Run", "Decide"][i]}</span><p>{s}</p></div>)}</div><div className="guardrails"><b>Success threshold</b><span>≥ 12% relative lift with 80% directional confidence</span><b>Guardrails</b><span>Unsubscribe rate, lead quality, sales acceptance</span></div></div>;
-}
-
-function EvidenceView({ segment }: { segment: Segment }) {
-  const rows = segment === "Mid-market" ? [["Post-demo progression", "−18% vs. target", "CRM funnel"], ["72-hour response gap", "43% of demos", "Sales activity"], ["Role-specific proof", "+11% in prior test", "Experiment log"]] : segment === "SMB" ? [["Landing → demo", "−14% vs. target", "GA4 funnel"], ["Proof content engaged", "2.3× intent", "Content events"], ["Operations persona", "61% of wins", "CRM segments"]] : [["MQL → SQL", "−27% vs. target", "CRM funnel"], ["Low-fit accounts", "38% of routed leads", "Lead scoring"], ["Sales cycle", "+19 days vs. plan", "Opportunity data"]];
-  return <div className="tab-content evidence-view"><div className="evidence-head"><span>SIGNAL</span><span>OBSERVATION</span><span>SOURCE</span></div>{rows.map((r, i) => <div className="evidence-row" key={r[0]}><span><i>{i + 1}</i>{r[0]}</span><strong>{r[1]}</strong><small>{r[2]} ↗</small></div>)}<p className="evidence-foot">All recommendations require at least two independent signals. Conflicting evidence lowers confidence and is shown—not averaged away.</p></div>;
 }
