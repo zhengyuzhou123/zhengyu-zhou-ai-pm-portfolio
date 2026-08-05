@@ -51,7 +51,10 @@ export default function Home() {
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </div>
-        <a className="resume-link" href={`${basePath}/Zhengyu_Zhou_Resume.docx`} download>Résumé ↓</a>
+        <div className="nav-actions">
+          <a className="language-link" href={`${basePath}/zh/`} lang="zh-CN">中文</a>
+          <a className="resume-link" href={`${basePath}/Zhengyu_Zhou_Resume.docx`} download>Résumé ↓</a>
+        </div>
       </nav>
 
       <header className="portfolio-hero" id="top">
