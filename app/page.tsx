@@ -35,6 +35,7 @@ const experiences = [
 ];
 
 export default function Home() {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const [segment, setSegment] = useState<Segment>("Mid-market");
   const [budget, setBudget] = useState(35);
   const data = segmentData[segment];
@@ -50,7 +51,7 @@ export default function Home() {
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </div>
-        <a className="resume-link" href="/Zhengyu_Zhou_Resume.docx" download>Résumé ↓</a>
+        <a className="resume-link" href={`${basePath}/Zhengyu_Zhou_Resume.docx`} download>Résumé ↓</a>
       </nav>
 
       <header className="portfolio-hero" id="top">
@@ -156,7 +157,7 @@ export default function Home() {
       <footer id="contact">
         <span className="contact-kicker">AVAILABLE FOR AI PRODUCT MANAGER OPPORTUNITIES</span>
         <h2>Let&apos;s build AI that earns<br />its place in the <em>workflow.</em></h2>
-        <div className="contact-row"><a href="mailto:zhouzhengyu221@gmail.com">Email me ↗</a><a href="https://linkedin.com/in/zhengyu-zhou-ksgg" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href="/Zhengyu_Zhou_Resume.docx" download>Download résumé ↓</a></div>
+        <div className="contact-row"><a href="mailto:zhouzhengyu221@gmail.com">Email me ↗</a><a href="https://linkedin.com/in/zhengyu-zhou-ksgg" target="_blank" rel="noreferrer">LinkedIn ↗</a><a href={`${basePath}/Zhengyu_Zhou_Resume.docx`} download>Download résumé ↓</a></div>
         <div className="footer-meta"><span>ZHENGYU ZHOU · BOSTON, MA</span><span>ENGLISH / 中文</span><span>© 2026</span></div>
       </footer>
     </main>
