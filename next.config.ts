@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const repositoryPath = "/zhengyu-zhou-ai-pm-portfolio";
-const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true" || process.env.NEXT_PUBLIC_BASE_PATH === repositoryPath;
 
 const nextConfig: NextConfig = {
   output: "export",
